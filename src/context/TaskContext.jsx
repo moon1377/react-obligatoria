@@ -15,6 +15,9 @@ export const TaskProvider = ({ children }) => {
     setDarkMode(prevMode => !prevMode);
   };
 
+
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
   }, [tasks]);
@@ -35,7 +38,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, deleteTask, updateTaskStatus, darkMode, toggleTheme }}>
+    <TaskContext.Provider value={{ tasks, addTask, deleteTask, updateTaskStatus, darkMode, toggleTheme, searchQuery, setSearchQuery }}>
       {children}
     </TaskContext.Provider>
   );
