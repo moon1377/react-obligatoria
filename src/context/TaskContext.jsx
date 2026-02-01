@@ -9,6 +9,12 @@ export const TaskProvider = ({ children }) => {
     return savedTasks ? JSON.parse(savedTasks) : [];
   });
 
+  const [darkMode, setDarkMode] = useState(false); 
+
+  const toggleTheme = () => {
+    setDarkMode(prevMode => !prevMode);
+  };
+
   useEffect(() => {
     localStorage.setItem('kanbanTasks', JSON.stringify(tasks));
   }, [tasks]);
@@ -29,7 +35,7 @@ export const TaskProvider = ({ children }) => {
   };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, deleteTask, updateTaskStatus }}>
+    <TaskContext.Provider value={{ tasks, addTask, deleteTask, updateTaskStatus, darkMode, toggleTheme }}>
       {children}
     </TaskContext.Provider>
   );
