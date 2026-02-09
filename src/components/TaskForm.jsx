@@ -2,26 +2,33 @@ import React from 'react';
 import { useTasks } from '../context/TaskContext';
 import { useForm } from '../hooks/useForm';
 
-const TaskForm = () => {
+const TaskForm = ({ userName }) => {
   const { addTask } = useTasks();
-  
-  // hook 
+
+  // inicia el formulario con valores por defecto usando el hook personalizado
   const { values, handleChange, resetForm } = useForm({
     title: '',
     description: '',
-    priority: 'Media' // este es el valor que hay 
+    priority: 'Media'
   });
 
+  // maneja el envio del formulario
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // validacion
+    e.preventDefault(); //previene recarga de pagina
     if (!values.title) return;
 
-    addTask(values); 
-    resetForm();     // limpia inputs
+    // agrega la tarea al contexto, incluyendo el autor
+    addTask({
+        ...values,
+        author: userName 
+    });
+
+    resetForm();
   };
 
   return (
+
+    //formulario con estilos inline
     <form onSubmit={handleSubmit} style={{ marginBottom: '20px', padding: '20px', border: '1px solid #ccc' }}>
       <h2>Nueva Tarea</h2>
       
@@ -50,7 +57,7 @@ const TaskForm = () => {
         style={{ width: '100%', marginBottom: '10px' }}
       />
 
-      <button type="submit">Añadir tarea</button>
+      <button type="submit">Añadir Tarea</button>
     </form>
   );
 };

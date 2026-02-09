@@ -1,18 +1,24 @@
 import React from 'react';
 import { useTasks } from '../context/TaskContext';
-import './TaskCard.css'; // css de borde rojo
+import './TaskCard.css';
 
 const TaskCard = ({ task }) => {
   const { deleteTask, updateTaskStatus } = useTasks();
 
-  // para el borde rojo 
+  // asigna clase css diferente según la prioridad
   const cardStyle = task.priority === 'Alta' ? 'task-card high-priority' : 'task-card';
 
   return (
     <div className={cardStyle}>
       <h3>{task.title}</h3>
       <p>{task.description}</p>
+      
       <span className="priority-tag">Prioridad: {task.priority}</span>
+
+      <div style={{ fontSize: '0.85rem', color: '#555', marginTop: '8px', fontStyle: 'italic' }}>
+        Creado por: <strong>{task.author || 'Anónimo'}</strong>
+      </div>
+
       
       <div className="task-actions">
         <button onClick={() => deleteTask(task.id)}>Borrar</button>
